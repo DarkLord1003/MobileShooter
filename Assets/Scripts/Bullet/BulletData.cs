@@ -15,27 +15,9 @@ public class BulletData : ScriptableObject
 
 
     //Properties
-    public float Speed
-    {
-        get => _speed;
-        set => _speed = value;
-    }
+    public float Speed => _speed;
+    public bool DestroyOnImpact => _destroyOnImpact;
+    public float MinDestroyTime => _minDestroyTime;
+    public float MaxDestroyTime => _maxDestroyTime;
 
-    public bool DestroyOnImpact
-    {
-        get => _destroyOnImpact;
-        set => _destroyOnImpact = value;
-    }
-
-    public float MinDestroyTime
-    {
-        get => _minDestroyTime;
-        set => _minDestroyTime = value;
-    }
-
-    public float MaxDestroyTime
-    {
-        get => _maxDestroyTime;
-        set => _maxDestroyTime = value;
-    }
 }

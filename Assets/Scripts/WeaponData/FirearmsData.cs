@@ -15,6 +15,7 @@ public class FirearmsData : WeaponData
 
     [Header("Aiming Settings")]
     [SerializeField] private float _aimFov;
+    [SerializeField] private float _defaultFov;
     [SerializeField] private float _timeEntryToScope;
 
     //Properties
@@ -23,6 +24,7 @@ public class FirearmsData : WeaponData
     public int ClipCount => _clipCount;
     public float FireRate => _fireRate;
     public float RecoilForce => _recoilForce;
-    public float AinFov => _aimFov;
+    public float AimFov => _aimFov;
+    public float DefaultFov => _defaultFov;
     public float TimeEntryToScope => _timeEntryToScope;
 }

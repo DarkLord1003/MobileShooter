@@ -18,5 +18,6 @@ MonoBehaviour:
   _clipCount: 6
   _fireRate: 10
   _recoilForce: 10
-  _aimFov: 40
-  _timeEntryToScope: 15
+  _aimFov: 25
+  _defaultFov: 60
+  _timeEntryToScope: 5

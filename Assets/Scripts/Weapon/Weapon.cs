@@ -8,6 +8,9 @@ public abstract class Weapon : MonoBehaviour
     [Header("Input Manager")]
     [SerializeField] protected InputManager InputManager;
 
+    [Header("Weapon Holder Transform")]
+    [SerializeField] protected Transform WeaponHolder;
+
     [Header("Camera")]
     [SerializeField] protected Camera WeaponCamera;
 

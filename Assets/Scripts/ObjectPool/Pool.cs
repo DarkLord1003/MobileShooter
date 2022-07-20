@@ -5,6 +5,7 @@ public class Pool
 {
     private string _name;
     private int _size;
+    private bool _resize;
     private List<GameObject> _objects;
     private Transform _parent;
 
@@ -20,6 +21,12 @@ public class Pool
         set => _size = value;
     }
 
+    public bool Resize
+    {
+        get => _resize;
+        set => _resize = value;
+    }
+
     public List<GameObject> Objects
     {
         get => _objects;
@@ -32,12 +39,14 @@ public class Pool
         set => _parent = value;
     }
 
-    public Pool(string name,int size,Transform parent)
+    public Pool(string name, int size, Transform parent, bool resize = false)
     {
         _name = name;
         _size = size;
 
         _objects = new List<GameObject>(size);
         _parent = parent;
+
+        _resize = resize;
     }
 }

@@ -19,6 +19,10 @@ public class Bullet : MonoBehaviour
         GetRefernces();
     }
 
+    private void Start()
+    {
+        StartCoroutine(DestroyAfter(15));
+    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -28,13 +32,19 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        Debug.Log(other.gameObject.name);
         StartCoroutine(DestroyTimer());
     }
 
     private IEnumerator DestroyTimer()
     {
         yield return new WaitForSeconds(Random.Range(_bulletData.MinDestroyTime, _bulletData.MaxDestroyTime));
+
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator DestroyAfter(float time)
+    {
+        yield return new WaitForSeconds(time);
 
         gameObject.SetActive(false);
     }

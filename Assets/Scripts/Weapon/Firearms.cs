@@ -8,15 +8,27 @@ public abstract class Firearms : Weapon
     [Header("Casing Spawn Point")]
     [SerializeField] protected Transform CasingSpawnPoint;
 
+    [Header("Aim Position")]
+    [SerializeField] protected Vector3 StartAimPosition;
+    [SerializeField] protected Vector3 EndAimPosition;
+
+    [Header("Aim Time")]
+    [SerializeField] protected float AimTime;
+
     [Header("Bullet Prefab")]
     [SerializeField] protected GameObject BulletPrefab;
 
     [Header("Muzzle Flash")]
     [SerializeField] protected ParticleSystem MuzzleFlash;
 
+    [Header("Audio Source")]
+    [SerializeField] protected AudioSource WeaponAudioSource;
+
+    [Header("Sounds")]
+    [SerializeField] protected AudioClip ShootSound;
+
     //Shoot settings
-    protected ShootType ShootingType;
-    protected int CurrentClipSizeCount;
+    protected int CurrentClipSize;
     protected float LastShootTime;
 
     //WeaponData
@@ -31,6 +43,7 @@ public abstract class Firearms : Weapon
     protected bool IsReloading;
     protected bool IsOutOfAmmo;
     protected bool CanShoot;
+    protected bool CanReload;
 
     //Methods
     protected abstract void Shoot();
@@ -38,26 +51,34 @@ public abstract class Firearms : Weapon
     protected abstract void Reload();
     protected virtual void CheckAmmoInClip()
     {
-        if(CurrentClipSizeCount <= 0)
+        if(CurrentClipSize == 0)
         {
             IsOutOfAmmo = true;
             CanShoot = false;
+            return;
         }
+        else if(CurrentClipSize < FirearmsData.ClipSize)
+        {
+            CanReload = true;
+            return;
+        }
+
+        CanReload = false;
     }
+
+    protected virtual void AddAmmoInClip()
+    {
+        int currentAmmoOutClip = FirearmsData.ClipSize - CurrentClipSize;
+    }
+
     protected virtual void Init()
     {
         CanShoot = true;
-        CurrentClipSizeCount = FirearmsData.ClipSize;
-        ShootingType = ShootType.Automatic; 
+        CurrentClipSize = FirearmsData.ClipSize;
     }
     protected virtual void InitBulletPool()
     {
         PoolManager.CreatePool(FirearmsData.NameGun + "_bullets", FirearmsData.ClipSize, BulletPrefab);
     }
 
-    protected enum ShootType
-    {
-        Single,
-        Automatic
-    }
 }

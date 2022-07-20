@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     public event Action Jump;
     public event Action Crouch;
     public event Action Shoot;
+    public event Action Aim;
 
     //Movement and view data
     private Vector2 _moveInput;
@@ -65,7 +66,7 @@ public class InputManager : MonoBehaviour
 
         _characterActions.Player.Crouch.performed += e => OnStartCrouch();
 
-        _characterActions.Player.Shoot.performed += e => OnShoot();
+       
     }
 
     private void OnStartCrouch()
@@ -88,6 +89,11 @@ public class InputManager : MonoBehaviour
         Shoot?.Invoke();
     }
 
+    private void OnAim()
+    {
+        Aim?.Invoke();
+    }
+
 
     #region - GetStatusMobileButtons -
 
@@ -106,7 +112,7 @@ public class InputManager : MonoBehaviour
 
             _shootPressTrigger = MobileControls.Instance.GetButton("Shoot");
             _aimPressTrigger = MobileControls.Instance.GetButtonDown("Aim");
-            _reloadTrigger = MobileControls.Instance.GetButtonDown("reload");
+            _reloadTrigger = MobileControls.Instance.GetButtonDown("Reload");
 
             _sprintTrigger = MobileControls.Instance.GetDistanceStick("LeftStick") > 95f;
         }

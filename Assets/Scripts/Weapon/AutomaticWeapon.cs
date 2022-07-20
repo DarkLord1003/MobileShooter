@@ -1,7 +1,14 @@
+using System.Collections;
 using UnityEngine;
+
 
 public class AutomaticWeapon : Firearms
 {
+    //Timer
+    private float _aimingTimer;
+
+    //Aim Coroutine
+    private Coroutine _aimCoroutine;
 
     private void Awake()
     {
@@ -17,7 +24,9 @@ public class AutomaticWeapon : Firearms
     private void Update()
     {
         CheckAmmoInClip();
+        Aim();
         Shoot();
+        Reload();
     }
 
 
@@ -30,9 +39,19 @@ public class AutomaticWeapon : Firearms
                 if (Time.time - LastShootTime > 1f / FirearmsData.FireRate)
                 {
                     LastShootTime = Time.time;
-                    CurrentClipSizeCount--;
+                    CurrentClipSize--;
 
-                    WeaponAnimator.Play("Shoot", 1, 0f);
+                    if (!IsAiming)
+                    {
+                        WeaponAnimator.Play("Shoot", 1, 0f);
+                    }
+                    else
+                    {
+                        WeaponAnimator.Play("Ak47_Shoot",1,0f);
+                    }
+
+                    WeaponAudioSource.clip = ShootSound;
+                    WeaponAudioSource.Play();
 
                     GameObject obj = PoolManager.GetObject(FirearmsData.NameGun + "_bullets",
                                                            BulletSpawnPoint.transform.position,
@@ -40,7 +59,7 @@ public class AutomaticWeapon : Firearms
 
                     Bullet bullet = obj.GetComponent<Bullet>();
 
-                    bullet.Rigidbody.velocity = bullet.transform.forward * -bullet.BulletData.Speed;
+                    bullet.Rigidbody.velocity = bullet.transform.forward * bullet.BulletData.Speed;
 
                 }
             }
@@ -49,21 +68,71 @@ public class AutomaticWeapon : Firearms
 
     protected override void Aim()
     {
+        if (InputManager.AimPressTrigger)
+        {
+            if (!IsAiming)
+            {
+                if(_aimCoroutine!= null)
+                {
+                    StopCoroutine(_aimCoroutine);
+                }
+
+                _aimCoroutine = StartCoroutine(Aiming(EndAimPosition, FirearmsData.AimFov));
+                IsAiming = true;
+            }
+            else
+            {
+                if (_aimCoroutine != null)
+                {
+                    StopCoroutine(_aimCoroutine);
+                }
+
+                _aimCoroutine = StartCoroutine(Aiming(StartAimPosition, FirearmsData.DefaultFov));
+                IsAiming = false;
+            }
+        }
         
     }
 
     protected override void Reload()
     {
+        if (InputManager.ReloadTrigger && !IsReloading && CanReload)
+        {
+            if (IsOutOfAmmo)
+            {
+                WeaponAnimator.Play("Ak47_ReloadOutOfAmmo", 0, 0f);
+            }
+            else
+            {
+                WeaponAnimator.Play("Ak47_ReloadLeftOfAmmo", 0, 0f);
+            }
+
+        }
         
     }
 
 
-    #region - OnEnable/OnDisable
+    #region AimingCoroutine -
 
-    private void OnEnable()
+    private IEnumerator Aiming(Vector3 aimPosition,float fov)
     {
-        
+        while (_aimingTimer < AimTime)
+        {
+            WeaponHolder.transform.localPosition = Vector3.Lerp(WeaponHolder.transform.localPosition,
+                                                   aimPosition, FirearmsData.TimeEntryToScope * Time.deltaTime);
+
+            WeaponCamera.fieldOfView = Mathf.Lerp(WeaponCamera.fieldOfView, fov, 
+                                                 FirearmsData.TimeEntryToScope * Time.deltaTime);
+
+            _aimingTimer += Time.deltaTime;
+
+            yield return null;
+
+        }
+
+        _aimingTimer = 0f;
     }
 
-    #endregion
+    #endregion;
+
 }

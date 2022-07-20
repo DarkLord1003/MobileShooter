@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b6f5b4d400d9547a32956ebdb2f883, type: 3}
   m_Name: Ak_47_bullet
   m_EditorClassIdentifier: 
-  _speed: 0
-  _destroyAfterTime: 0
-  _destroyOnImpact: 0
-  _minDestroyTime: 0
-  _maxDestroyTime: 0
+  _speed: 150
+  _destroyOnImpact: 1
+  _minDestroyTime: 5
+  _maxDestroyTime: 8
