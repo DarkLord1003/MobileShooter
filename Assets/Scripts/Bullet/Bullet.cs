@@ -21,9 +21,10 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DestroyAfter(15));
+        StartCoroutine(DestroyAfter(8));
     }
 
+    #region - OnCollisionEnter -
     private void OnCollisionEnter(Collision other)
     {
         if (_bulletData.DestroyOnImpact)
@@ -35,6 +36,17 @@ public class Bullet : MonoBehaviour
         StartCoroutine(DestroyTimer());
     }
 
+    #endregion
+
+    #region - GetReferences -
+    private void GetRefernces()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    #endregion
+
+    #region - Destroy Timers -
     private IEnumerator DestroyTimer()
     {
         yield return new WaitForSeconds(Random.Range(_bulletData.MinDestroyTime, _bulletData.MaxDestroyTime));
@@ -49,8 +61,6 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void GetRefernces()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+    #endregion
+
 }

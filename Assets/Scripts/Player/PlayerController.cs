@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour
     private float _currentCameraHeight;
     private float _cameraHeightVelocity;
 
+    [Space(5)]
+    [Header("Sounds")]
+    [SerializeField] private AudioCollection _footsteps;
+
     //Animations
     private bool _crouchingAnimation;
 
@@ -94,6 +98,7 @@ public class PlayerController : MonoBehaviour
         CalculateSprinting();
         CalculateGravity();
         Movement();
+        PlayFootStepSound();
         CalculateFalling();
         UpdateAnimation();
     }
@@ -376,6 +381,18 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region - CheckMovement -
+
+    private bool CheckMovement()
+    {
+        if(_axis.sqrMagnitude > 0.2)
+            return true;
+
+        return false;
+    }
+
+    #endregion
+
     #region - Crocuhing - 
 
     private IEnumerator CrouchingStanding()
@@ -416,6 +433,33 @@ public class PlayerController : MonoBehaviour
                            _feetTransform.transform.position.z);
 
         return Physics.CheckCapsule(startPoint, endPoint, _characterController.radius,_playerSettings.CheckCeilingMask);
+    }
+
+    #endregion
+
+    #region - PlayFootstepSound -
+
+    private void PlayFootStepSound()
+    {
+        if (!CheckMovement())
+            return;
+
+        if(AudioManager.Instance != null && _footsteps != null)
+        {
+            AudioClip audioClip;
+
+            if (_isRunning)
+            {
+                audioClip = _footsteps[1];
+            }
+            else
+            {
+                audioClip = _footsteps[0];
+            }
+
+            AudioManager.Instance.PlayOneShotSound("Player", audioClip, transform.position, _footsteps.Volume,
+                                                  _footsteps.SpatialBlend, _footsteps.Priority);
+        }
     }
 
     #endregion

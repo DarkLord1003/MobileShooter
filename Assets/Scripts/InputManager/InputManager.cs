@@ -23,10 +23,8 @@ public class InputManager : MonoBehaviour
     //Private fields
     private bool _crouchTrigger;
     private bool _sprintTrigger;
-    private bool _shootPressTrigger;
-    private bool _shootReleaseTrigger;
-    private bool _aimPressTrigger;
-    private bool _aimReleaseTrigger;
+    private bool _shootTrigger;
+    private bool _aimTrigger;
     private bool _reloadTrigger;
 
     //Properties
@@ -35,10 +33,8 @@ public class InputManager : MonoBehaviour
     public bool IsMobilePlatform => _isMobilePlatform;
     public bool SprintTrigger => _sprintTrigger;
     public bool CrouchTrigger => _crouchTrigger;
-    public bool ShootPressTrigger => _shootPressTrigger;
-    public bool ShootReleaseTrigger => _shootReleaseTrigger;
-    public bool AimPressTrigger => _aimPressTrigger;
-    public bool AimReleaseTrigger => _aimReleaseTrigger;
+    public bool ShootTrigger => _shootTrigger;
+    public bool AimTrigger => _aimTrigger;
     public bool ReloadTrigger => _reloadTrigger;
 
 
@@ -53,6 +49,7 @@ public class InputManager : MonoBehaviour
         GetStatusMobileButtons();
     }
 
+    #region - SubscribingToEvents -
     private void SubscribingToEvents()
     {
         _characterActions.Player.Movement.performed += e => OnMove(e);
@@ -64,11 +61,12 @@ public class InputManager : MonoBehaviour
         _characterActions.Player.Sprint.started += e => _sprintTrigger = true;
         _characterActions.Player.Sprint.canceled += e => _sprintTrigger = false;
 
-        _characterActions.Player.Crouch.performed += e => OnStartCrouch();
-
-       
+        _characterActions.Player.Crouch.performed += e => OnStartCrouch(); 
     }
 
+    #endregion
+
+    #region - On Methods -
     private void OnStartCrouch()
     {
         Crouch?.Invoke();
@@ -94,6 +92,7 @@ public class InputManager : MonoBehaviour
         Aim?.Invoke();
     }
 
+    #endregion
 
     #region - GetStatusMobileButtons -
 
@@ -110,8 +109,8 @@ public class InputManager : MonoBehaviour
                 Jump?.Invoke();
             }
 
-            _shootPressTrigger = MobileControls.Instance.GetButton("Shoot");
-            _aimPressTrigger = MobileControls.Instance.GetButtonDown("Aim");
+            _shootTrigger = MobileControls.Instance.GetButton("Shoot");
+            _aimTrigger = MobileControls.Instance.GetButtonDown("Aim");
             _reloadTrigger = MobileControls.Instance.GetButtonDown("Reload");
 
             _sprintTrigger = MobileControls.Instance.GetDistanceStick("LeftStick") > 95f;

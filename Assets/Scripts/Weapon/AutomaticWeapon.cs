@@ -29,10 +29,10 @@ public class AutomaticWeapon : Firearms
         Reload();
     }
 
-
+    #region - Shoot -
     protected override void Shoot()
     {
-        if (InputManager.ShootPressTrigger)
+        if (InputManager.ShootTrigger)
         {
             if (CanShoot && !IsOutOfAmmo && !IsReloading)
             {
@@ -41,14 +41,7 @@ public class AutomaticWeapon : Firearms
                     LastShootTime = Time.time;
                     CurrentClipSize--;
 
-                    if (!IsAiming)
-                    {
-                        WeaponAnimator.Play("Shoot", 1, 0f);
-                    }
-                    else
-                    {
-                        WeaponAnimator.Play("Ak47_Shoot",1,0f);
-                    }
+                    WeaponAnimator.Play("Ak47_Shoot", 1, 0f);
 
                     WeaponAudioSource.clip = ShootSound;
                     WeaponAudioSource.Play();
@@ -66,9 +59,12 @@ public class AutomaticWeapon : Firearms
         }
     }
 
+    #endregion
+
+    #region - Aim -
     protected override void Aim()
     {
-        if (InputManager.AimPressTrigger)
+        if (InputManager.AimTrigger)
         {
             if (!IsAiming)
             {
@@ -94,12 +90,16 @@ public class AutomaticWeapon : Firearms
         
     }
 
+    #endregion
+
+    #region - Reload -
     protected override void Reload()
     {
         if (InputManager.ReloadTrigger && !IsReloading && CanReload)
         {
             if (IsOutOfAmmo)
             {
+                IsReloading = true;
                 WeaponAnimator.Play("Ak47_ReloadOutOfAmmo", 0, 0f);
             }
             else
@@ -111,6 +111,7 @@ public class AutomaticWeapon : Firearms
         
     }
 
+    #endregion
 
     #region AimingCoroutine -
 

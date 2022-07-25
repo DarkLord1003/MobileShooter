@@ -29,6 +29,7 @@ public abstract class Firearms : Weapon
 
     //Shoot settings
     protected int CurrentClipSize;
+    protected int CurrentAmmo;
     protected float LastShootTime;
 
     //WeaponData
@@ -45,10 +46,12 @@ public abstract class Firearms : Weapon
     protected bool CanShoot;
     protected bool CanReload;
 
-    //Methods
+    //Methods abstract
     protected abstract void Shoot();
     protected abstract void Aim();
     protected abstract void Reload();
+
+    //Virtual methods
     protected virtual void CheckAmmoInClip()
     {
         if(CurrentClipSize == 0)
@@ -65,16 +68,32 @@ public abstract class Firearms : Weapon
 
         CanReload = false;
     }
-
     protected virtual void AddAmmoInClip()
     {
-        int currentAmmoOutClip = FirearmsData.ClipSize - CurrentClipSize;
-    }
+        if (CurrentAmmo == 0)
+            return;
 
+        int currentAmmoOutClip = FirearmsData.ClipSize - CurrentClipSize;
+
+        if(CurrentAmmo >= currentAmmoOutClip)
+        {
+            CurrentAmmo -= currentAmmoOutClip;
+            CurrentClipSize += currentAmmoOutClip;
+        }
+        else
+        {
+            CurrentClipSize += CurrentAmmo;
+            CurrentAmmo -= CurrentAmmo;
+        }
+
+        IsOutOfAmmo = false;
+    }
     protected virtual void Init()
     {
         CanShoot = true;
+
         CurrentClipSize = FirearmsData.ClipSize;
+        CurrentAmmo = FirearmsData.ClipCount * FirearmsData.ClipSize;
     }
     protected virtual void InitBulletPool()
     {
