@@ -190,7 +190,6 @@ public class AudioManager : MonoBehaviour
 
         foreach (AudioMixerGroup group in groups)
         {
-            Debug.Log(group.name);
             TrackInfo trackInfo = new TrackInfo();
             trackInfo.Name = group.name;
             trackInfo.Group = group;

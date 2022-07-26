@@ -18,9 +18,12 @@ MonoBehaviour:
   _priority: 128
   _clipBanks:
   - Clips:
-    - {fileID: 8300000, guid: 54c4205973ff8a14187c4cb74aa0c194, type: 3}
-    - {fileID: 8300000, guid: 0484f14b048cdd349ae54d0748c71b9b, type: 3}
-    - {fileID: 8300000, guid: d0eaed32dfbef9341b7206da39a2b2aa, type: 3}
-    - {fileID: 8300000, guid: 339e32c79dfd4be409054113acaf0be5, type: 3}
+    - {fileID: 8300000, guid: 8247a49ec436156478f0860b9d221f93, type: 3}
+    - {fileID: 8300000, guid: 523f26b6133f3894c88f6f6346a33108, type: 3}
+    - {fileID: 8300000, guid: 06712d054adf4f0439d52bcea37c53a0, type: 3}
+    - {fileID: 8300000, guid: c713cada3596d5a47988fe2be515f29b, type: 3}
   - Clips:
-    - {fileID: 8300000, guid: 0c58744c3b6fdd844b8348066c3f703e, type: 3}
+    - {fileID: 8300000, guid: 8247a49ec436156478f0860b9d221f93, type: 3}
+    - {fileID: 8300000, guid: 523f26b6133f3894c88f6f6346a33108, type: 3}
+    - {fileID: 8300000, guid: c713cada3596d5a47988fe2be515f29b, type: 3}
+    - {fileID: 8300000, guid: 06712d054adf4f0439d52bcea37c53a0, type: 3}

@@ -136,4 +136,18 @@ public class AutomaticWeapon : Firearms
 
     #endregion;
 
+    #region - OnEnable/Disable -
+
+    private void OnEnable()
+    {
+        EventManager.StartListening("AddAmmo", AddAmmoInClip);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("AddAmmo", AddAmmoInClip);
+    }
+
+    #endregion
+
 }

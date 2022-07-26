@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static ModelSettings;
 
@@ -35,6 +36,10 @@ public class PlayerController : MonoBehaviour
     private float _currentCameraHeight;
     private float _cameraHeightVelocity;
 
+    [Header("Head Breathing")]
+    [SerializeField] private CurveControlledBod _headBob = new CurveControlledBod();
+
+
     [Space(5)]
     [Header("Sounds")]
     [SerializeField] private AudioCollection _footsteps;
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour
     //Look
     private Vector3 _newCharcterRotation;
     private Vector3 _newCameraRotation;
+    private Vector3 _localSpaceCameraPos;
 
     //Move
     private Vector3 _axis;
@@ -98,7 +104,6 @@ public class PlayerController : MonoBehaviour
         CalculateSprinting();
         CalculateGravity();
         Movement();
-        PlayFootStepSound();
         CalculateFalling();
         UpdateAnimation();
     }
@@ -126,6 +131,16 @@ public class PlayerController : MonoBehaviour
             ref _smoothingCharacterPositionVelocity, _playerSettings.SmotthingMovementSpeed);
 
         _characterController.Move(_smoothingCharacterPositon + _gravityMovement);
+
+        if (_characterController.velocity.magnitude > 0.01f)
+        {
+            _camera.transform.localPosition = _localSpaceCameraPos +
+                                              _headBob.GetVectorOffset(_characterController.velocity.magnitude);
+        }
+        else
+        {
+            _camera.transform.localPosition = _localSpaceCameraPos;
+        }
     }
 
     private void View()
@@ -315,6 +330,11 @@ public class PlayerController : MonoBehaviour
         _currentBodyPosition = PlayerBodyPosition.Stand;
         _currentCameraHeight = 0.8f;
         _currentStance = _stand;
+
+        _localSpaceCameraPos = _camera.transform.localPosition;
+
+        _headBob.Initialize();
+        _headBob.RegisterEventCallback(1.5f, PlayFootStepSound, CurveControlledBod.CurveControlledBobCallbackType.Vertical);
     }
 
     #endregion
@@ -441,9 +461,6 @@ public class PlayerController : MonoBehaviour
 
     private void PlayFootStepSound()
     {
-        if (!CheckMovement())
-            return;
-
         if(AudioManager.Instance != null && _footsteps != null)
         {
             AudioClip audioClip;
@@ -489,4 +506,121 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+}
+
+    #region - CurveControlledBob -
+
+[System.Serializable]
+public class CurveControlledBod
+{
+    [SerializeField]
+    private AnimationCurve _bobcurve = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.5f, 1f),
+                                                          new Keyframe(1f, 0f), new Keyframe(1.5f, -1f),
+                                                          new Keyframe(2f, 0f));
+
+    [SerializeField] private float _horizontalMultiplier;
+    [SerializeField] private float _verticalMultiplier;
+    [SerializeField] private float _verticalHorizontalSpeedRation;
+    [SerializeField] private float _baseInternal;
+
+    private float _prevXPlayHead;
+    private float _prevYPlayHead;
+    private float _xPlayHead;
+    private float _yPlayHead;
+    private float _curveEndTime;
+    private List<CurveControlledBobEvent> _events = new List<CurveControlledBobEvent>();
+
+    public void Initialize()
+    {
+        _curveEndTime = _bobcurve[_bobcurve.length - 1].time;
+        _xPlayHead = 0f;
+        _yPlayHead = 0f;
+        _prevXPlayHead = 0f;
+        _prevYPlayHead = 0f;
+    }
+
+    public void RegisterEventCallback(float time, CurveControlledBobCallback function, CurveControlledBobCallbackType type)
+    {
+        CurveControlledBobEvent bobEvent = new CurveControlledBobEvent();
+        bobEvent.Time = time;
+        bobEvent.Function = function;
+        bobEvent.Type = type;
+
+        _events.Add(bobEvent);
+        _events.Sort(delegate(CurveControlledBobEvent t1, CurveControlledBobEvent t2)
+            {
+                return (t1.Time.CompareTo(t2.Time));
+            }
+        );
+    }
+    public Vector3 GetVectorOffset(float speed)
+    {
+        _xPlayHead += (speed * Time.deltaTime) / _baseInternal;
+        _yPlayHead += ((speed * Time.deltaTime) / _baseInternal) * _verticalHorizontalSpeedRation;
+
+        if (_xPlayHead > _curveEndTime)
+            _xPlayHead -= _curveEndTime;
+
+        if (_yPlayHead > _curveEndTime)
+            _yPlayHead -= _curveEndTime;
+
+        for(int i = 0; i < _events.Count; i++)
+        {
+            CurveControlledBobEvent ev = _events[i];
+
+            if (ev != null)
+            {
+                if(ev.Type == CurveControlledBobCallbackType.Vertical)
+                {
+                    if((_prevYPlayHead < ev.Time && _yPlayHead >= ev.Time ||
+                        (_prevYPlayHead > _yPlayHead && (ev.Time > _prevYPlayHead || ev.Time <= _yPlayHead))))
+                    {
+                        ev.Function();
+                    }
+                }
+                else
+                {
+                    if ((_prevXPlayHead < ev.Time && _xPlayHead >= ev.Time ||
+                       (_prevXPlayHead > _xPlayHead && (ev.Time > _prevXPlayHead || ev.Time <= _xPlayHead))))
+                    {
+                        ev.Function();
+                    }
+                }
+            }
+        }
+
+        float xPos = _bobcurve.Evaluate(_xPlayHead) * _horizontalMultiplier;
+        float yPos = _bobcurve.Evaluate(_yPlayHead) * _verticalMultiplier;
+
+        _prevXPlayHead = _xPlayHead;
+        _prevYPlayHead = _yPlayHead;
+
+        return new Vector3(xPos, yPos, 0f);
+    }
+
+    #endregion
+
+    #region - CurveControlledBobevent -
+
+    public class CurveControlledBobEvent
+    {
+        public float Time;
+        public CurveControlledBobCallback Function;
+        public CurveControlledBobCallbackType Type = CurveControlledBobCallbackType.Vertical;
+
+    }
+
+    #endregion
+
+    #region - CurveControlledBobCallbackType -
+
+    public enum CurveControlledBobCallbackType
+    {
+        Horizontal,
+        Vertical
+    }
+
+    #endregion
+
+    public delegate void CurveControlledBobCallback(); 
 }
