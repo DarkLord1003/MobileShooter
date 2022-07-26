@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -21,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DestroyAfter(8));
+        StartCoroutine(DestroyAfter(5));
     }
 
     #region - OnCollisionEnter -

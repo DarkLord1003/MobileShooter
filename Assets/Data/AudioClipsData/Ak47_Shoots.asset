@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938c3b48fbe7eaa429ecba736cd4eeea, type: 3}
+  m_Name: Ak47_Shoots
+  m_EditorClassIdentifier: 
+  _audioGroup: Weapon
+  _volume: 0.2
+  _spatialBlend: 1
+  _priority: 128
+  _clipBanks:
+  - Clips:
+    - {fileID: 8300000, guid: 5833f9a7335e4ca41a5fee461d318226, type: 3}
+    - {fileID: 8300000, guid: 3dcc440a5bbfc1e4daa357cf5fbbad87, type: 3}
+    - {fileID: 8300000, guid: 92346969ced221f4e8d3cda70907903d, type: 3}
+    - {fileID: 8300000, guid: 97a8c0df809925c44b1ac1e2f69efbc2, type: 3}
+    - {fileID: 8300000, guid: 28f024220885f93429c3fefde65f3fd4, type: 3}
+    - {fileID: 8300000, guid: b34c52da0b81162478d35f902d768e28, type: 3}

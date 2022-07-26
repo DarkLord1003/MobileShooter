@@ -1,11 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationEventProvider : MonoBehaviour
 {
-    public void AddAmmo()
+    public void OnAddAmmo()
     {
         EventManager.TriggerEvent("AddAmmo");
+    }
+
+    public void OnPlayPullingOutClipSound()
+    {
+        EventManager.TriggerEvent("PlayPullingOutClipSound");
+    }
+
+    public void OnPlayInsertingClipSound()
+    {
+        EventManager.TriggerEvent("PlayInsertingClipSound");
+    }
+
+    public void OnPlayShutterDistortionSound()
+    {
+        EventManager.TriggerEvent("PlayShutterDistortionSound");
     }
 }

@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-8551689473864199758
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: e854fdb49875dbc4e8818b0deb95f60a
+  m_EffectName: Attenuation
+  m_MixLevel: 4fa13207f8ad572428eb7b96b86590ba
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-8269956193346824315
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -24,7 +38,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 14befff56b651a14e8e92710069c8c90
   m_Children:
-  - {fileID: 8353364990285589475}
+  - {fileID: -3516568889951517246}
   m_Volume: 2bf240df4fc4a5e49b1e91c9e6ee114c
   m_Pitch: e4104afd57c6a514cbe48746c6f06696
   m_Send: 00000000000000000000000000000000
@@ -62,6 +76,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &-3516568889951517246
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Weapon
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 287eb406fbfbae846bc1b1bd057abea3
+  m_Children: []
+  m_Volume: 530379de7ca34534394aec162c630052
+  m_Pitch: 1d1dbe7367099f04391ff47632b84fd5
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -8551689473864199758}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -90,6 +123,7 @@ AudioMixerController:
     - 1d59d87f463cd574884cd033c5466809
     - 14befff56b651a14e8e92710069c8c90
     - f8d924b3483fd494a9767a080c20edae
+    - 287eb406fbfbae846bc1b1bd057abea3
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -104,6 +138,7 @@ AudioMixerGroupController:
   m_GroupID: 6b598bd43c1478844b2f55d4af78c5f1
   m_Children:
   - {fileID: 8614445274136136474}
+  - {fileID: 8353364990285589475}
   - {fileID: -7019474217179922639}
   m_Volume: 0931e68f5bab248429b907786616590b
   m_Pitch: 06fbeca2ddab3ca469415fe422909449

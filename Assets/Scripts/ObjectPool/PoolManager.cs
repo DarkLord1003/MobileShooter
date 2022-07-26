@@ -14,7 +14,7 @@ public class PoolManager
     /// <param name="namePool">Название пула</param>
     /// <param name="size">Размер пула</param>
     /// <param name="prefab">Объект</param>
-    public static void CreatePool(string namePool,int size,GameObject prefab)
+    public static void CreatePool(string namePool, int size, GameObject prefab, bool resize = false)
     {
         if (string.IsNullOrEmpty(namePool) || size <= 0 || prefab == null)
             return;
@@ -22,7 +22,7 @@ public class PoolManager
         if (_pools.ContainsKey(namePool))
             return;
 
-        Pool newPool = new Pool(namePool, size, new GameObject("Pool - " + namePool).transform);
+        Pool newPool = new Pool(namePool, size, new GameObject("Pool - " + namePool).transform,resize);
 
         for(int i = 0; i < size; i++)
         {

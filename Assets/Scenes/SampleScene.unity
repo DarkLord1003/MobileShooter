@@ -4005,8 +4005,7 @@ MonoBehaviour:
   AimTime: 8
   BulletPrefab: {fileID: 8006854305764867933, guid: ab67e30eb6e771048ab1c066ec1488be, type: 3}
   MuzzleFlash: {fileID: 0}
-  WeaponAudioSource: {fileID: 2263346454474338384}
-  ShootSound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
+  WeaponShoots: {fileID: 11400000, guid: f44e8da0e18a45844871f38378e23cff, type: 2}
 --- !u!1 &2263346454474338383
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,11 +21,9 @@ public abstract class Firearms : Weapon
     [Header("Muzzle Flash")]
     [SerializeField] protected ParticleSystem MuzzleFlash;
 
-    [Header("Audio Source")]
-    [SerializeField] protected AudioSource WeaponAudioSource;
-
-    [Header("Sounds")]
-    [SerializeField] protected AudioClip ShootSound;
+    [Header("Audio Collections")]
+    [SerializeField] protected AudioCollection WeaponShoots;
+    [SerializeField] protected AudioCollection WeaponReloading;
 
     //Shoot settings
     protected int CurrentClipSize;
@@ -87,6 +85,7 @@ public abstract class Firearms : Weapon
         }
 
         IsOutOfAmmo = false;
+        IsReloading = false;
     }
     protected virtual void Init()
     {

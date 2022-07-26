@@ -43,8 +43,9 @@ public class AutomaticWeapon : Firearms
 
                     WeaponAnimator.Play("Ak47_Shoot", 1, 0f);
 
-                    WeaponAudioSource.clip = ShootSound;
-                    WeaponAudioSource.Play();
+                    AudioManager.Instance.PlayOneShotSound("Weapon", WeaponShoots[0], transform.position, 
+                                                           WeaponShoots.Volume, WeaponShoots.SpatialBlend, 
+                                                           WeaponShoots.Priority);
 
                     GameObject obj = PoolManager.GetObject(FirearmsData.NameGun + "_bullets",
                                                            BulletSpawnPoint.transform.position,
@@ -113,6 +114,31 @@ public class AutomaticWeapon : Firearms
 
     #endregion
 
+    #region - PlayReloadSounds -
+
+    private void PlayPullingOutClipSound()
+    {
+        AudioManager.Instance.PlayOneShotSound("Weapon", WeaponReloading[0], transform.position,
+                                               WeaponReloading.Volume, WeaponReloading.SpatialBlend,
+                                               WeaponReloading.Priority);
+    }
+
+    private void PlayInsertingClipSound()
+    {
+        AudioManager.Instance.PlayOneShotSound("Weapon", WeaponReloading[1], transform.position,
+                                               WeaponReloading.Volume, WeaponReloading.SpatialBlend,
+                                               WeaponReloading.Priority);
+    }
+
+    private void PlayShutterDistortionSound()
+    {
+        AudioManager.Instance.PlayOneShotSound("Weapon", WeaponReloading[2], transform.position,
+                                               WeaponReloading.Volume, WeaponReloading.SpatialBlend,
+                                               WeaponReloading.Priority);
+    }
+
+    #endregion
+
     #region AimingCoroutine -
 
     private IEnumerator Aiming(Vector3 aimPosition,float fov)
@@ -141,11 +167,17 @@ public class AutomaticWeapon : Firearms
     private void OnEnable()
     {
         EventManager.StartListening("AddAmmo", AddAmmoInClip);
+        EventManager.StartListening("PlayPullingOutClipSound", PlayPullingOutClipSound);
+        EventManager.StartListening("PlayInsertingClipSound", PlayInsertingClipSound);
+        EventManager.StartListening("PlayShutterDistortionSound", PlayShutterDistortionSound);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("AddAmmo", AddAmmoInClip);
+        EventManager.StopListening("PlayPullingOutClipSound", PlayPullingOutClipSound);
+        EventManager.StopListening("PlayInsertingClipSound", PlayInsertingClipSound);
+        EventManager.StopListening("PlayShutterDistortionSound", PlayShutterDistortionSound);
     }
 
     #endregion
