@@ -43,6 +43,7 @@ public abstract class Firearms : Weapon
     protected bool IsOutOfAmmo;
     protected bool CanShoot;
     protected bool CanReload;
+    protected bool CanAiming;
 
     //Methods abstract
     protected abstract void Shoot();
@@ -77,11 +78,13 @@ public abstract class Firearms : Weapon
         {
             CurrentAmmo -= currentAmmoOutClip;
             CurrentClipSize += currentAmmoOutClip;
+            CanShoot = true;
         }
         else
         {
             CurrentClipSize += CurrentAmmo;
             CurrentAmmo -= CurrentAmmo;
+            CanShoot = true;
         }
 
         IsOutOfAmmo = false;
@@ -90,13 +93,14 @@ public abstract class Firearms : Weapon
     protected virtual void Init()
     {
         CanShoot = true;
+        CanAiming = true;
 
         CurrentClipSize = FirearmsData.ClipSize;
         CurrentAmmo = FirearmsData.ClipCount * FirearmsData.ClipSize;
     }
     protected virtual void InitBulletPool()
     {
-        PoolManager.CreatePool(FirearmsData.NameGun + "_bullets", FirearmsData.ClipSize, BulletPrefab);
+        PoolManager.CreatePool(FirearmsData.NameGun + "_bullets", FirearmsData.ClipSize, BulletPrefab,true);
     }
 
 }

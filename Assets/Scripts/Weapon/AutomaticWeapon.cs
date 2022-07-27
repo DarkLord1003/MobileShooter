@@ -65,7 +65,8 @@ public class AutomaticWeapon : Firearms
     #region - Aim -
     protected override void Aim()
     {
-        if (InputManager.AimTrigger)
+        if (InputManager.AimTrigger && !WeaponAnimator.GetCurrentAnimatorStateInfo(0).IsName(FirearmsData.NameGun + "_Run")
+            && CanAiming)
         {
             if (!IsAiming)
             {
@@ -88,6 +89,15 @@ public class AutomaticWeapon : Firearms
                 IsAiming = false;
             }
         }
+        else if(WeaponAnimator.GetCurrentAnimatorStateInfo(0).IsName(FirearmsData.NameGun + "_Run"))
+        {
+            if (IsAiming)
+            {
+                StopCoroutine(_aimCoroutine);
+                _aimCoroutine = StartCoroutine(Aiming(StartAimPosition, FirearmsData.DefaultFov));
+                IsAiming = false;
+            }
+        }
         
     }
 
@@ -105,6 +115,7 @@ public class AutomaticWeapon : Firearms
             }
             else
             {
+                IsReloading = true;
                 WeaponAnimator.Play("Ak47_ReloadLeftOfAmmo", 0, 0f);
             }
 

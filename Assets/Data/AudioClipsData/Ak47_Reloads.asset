@@ -17,6 +17,9 @@ MonoBehaviour:
   _spatialBlend: 1
   _priority: 125
   _clipBanks:
-  - Clips: []
-  - Clips: []
-  - Clips: []
+  - Clips:
+    - {fileID: 8300000, guid: 097ffac7bc55f0943bf92f4766b5ef1a, type: 3}
+  - Clips:
+    - {fileID: 8300000, guid: 097ffac7bc55f0943bf92f4766b5ef1a, type: 3}
+  - Clips:
+    - {fileID: 8300000, guid: 0f1b62bc800bf00409a1d82a377f7ac3, type: 3}

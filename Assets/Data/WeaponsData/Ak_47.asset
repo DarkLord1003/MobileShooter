@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3f6d8762a10e24eac2cf3010020e07, type: 3}
   m_Name: Ak_47
   m_EditorClassIdentifier: 
-  WeaponName: Ak-47
+  WeaponName: Ak47
   Icon: {fileID: 0}
   _clipSize: 30
   _clipCount: 6

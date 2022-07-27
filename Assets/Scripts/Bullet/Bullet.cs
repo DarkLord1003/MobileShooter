@@ -18,11 +18,6 @@ public class Bullet : MonoBehaviour
         GetRefernces();
     }
 
-    private void Start()
-    {
-        StartCoroutine(DestroyAfter(5));
-    }
-
     #region - OnCollisionEnter -
     private void OnCollisionEnter(Collision other)
     {
@@ -58,6 +53,15 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         gameObject.SetActive(false);
+    }
+
+    #endregion
+
+    #region - OnEnable -
+
+    private void OnEnable()
+    {
+        StartCoroutine(DestroyAfter(8f));
     }
 
     #endregion
