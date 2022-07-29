@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938c3b48fbe7eaa429ecba736cd4eeea, type: 3}
+  m_Name: Casing_Shells
+  m_EditorClassIdentifier: 
+  _audioGroup: Casing
+  _volume: 0.1
+  _spatialBlend: 1
+  _priority: 120
+  _clipBanks:
+  - Clips:
+    - {fileID: 8300000, guid: da5623af5671e154cace99d526f6f4a4, type: 3}
+    - {fileID: 8300000, guid: a1e22b4f61bbd3d40bad061b7a4e4bc7, type: 3}
+    - {fileID: 8300000, guid: 3a7985f94bdd84d4f9ea8a9fb7be44e0, type: 3}
+    - {fileID: 8300000, guid: 7c84b604f23ec6f41b1b2c5948cb29d4, type: 3}
+    - {fileID: 8300000, guid: 4327f9f0392a66f49b5548660d83deb1, type: 3}

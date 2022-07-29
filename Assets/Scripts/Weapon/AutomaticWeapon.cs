@@ -18,6 +18,7 @@ public class AutomaticWeapon : Firearms
     private void Start()
     {
         InitBulletPool();
+        InitCasingPool();
         Init();
     }
 
@@ -42,6 +43,8 @@ public class AutomaticWeapon : Firearms
                     CurrentClipSize--;
 
                     WeaponAnimator.Play("Ak47_Shoot", 1, 0f);
+
+                    MuzzleFlash.Play();
 
                     AudioManager.Instance.PlayOneShotSound("Weapon", WeaponShoots[0], transform.position, 
                                                            WeaponShoots.Volume, WeaponShoots.SpatialBlend, 
@@ -125,6 +128,16 @@ public class AutomaticWeapon : Firearms
 
     #endregion
 
+    #region - SpawnCasing -
+
+    private void SpawnCasing()
+    {
+          PoolManager.GetObject("Casing", CasingSpawnPoint.transform.position, 
+                                          CasingSpawnPoint.transform.rotation);
+    }
+
+    #endregion
+
     #region - PlayReloadSounds -
 
     private void PlayPullingOutClipSound()
@@ -149,8 +162,8 @@ public class AutomaticWeapon : Firearms
     }
 
     #endregion
-
-    #region AimingCoroutine -
+    
+    #region - AimingCoroutine -
 
     private IEnumerator Aiming(Vector3 aimPosition,float fov)
     {
@@ -181,6 +194,7 @@ public class AutomaticWeapon : Firearms
         EventManager.StartListening("PlayPullingOutClipSound", PlayPullingOutClipSound);
         EventManager.StartListening("PlayInsertingClipSound", PlayInsertingClipSound);
         EventManager.StartListening("PlayShutterDistortionSound", PlayShutterDistortionSound);
+        EventManager.StartListening("SpawnCasing", SpawnCasing);
     }
 
     private void OnDisable()
@@ -189,6 +203,7 @@ public class AutomaticWeapon : Firearms
         EventManager.StopListening("PlayPullingOutClipSound", PlayPullingOutClipSound);
         EventManager.StopListening("PlayInsertingClipSound", PlayInsertingClipSound);
         EventManager.StopListening("PlayShutterDistortionSound", PlayShutterDistortionSound);
+        EventManager.StopListening("SpawnCasing", SpawnCasing);
     }
 
     #endregion

@@ -21,4 +21,9 @@ public class AnimationEventProvider : MonoBehaviour
     {
         EventManager.TriggerEvent("PlayShutterDistortionSound");
     }
+
+    public void OnSpawnCasing()
+    {
+        EventManager.TriggerEvent("SpawnCasing");
+    }
 }

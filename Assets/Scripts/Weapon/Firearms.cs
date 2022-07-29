@@ -18,6 +18,9 @@ public abstract class Firearms : Weapon
     [Header("Bullet Prefab")]
     [SerializeField] protected GameObject BulletPrefab;
 
+    [Header("Casing Prefab")]
+    [SerializeField] private GameObject CasingPrefab;
+
     [Header("Muzzle Flash")]
     [SerializeField] protected ParticleSystem MuzzleFlash;
 
@@ -101,6 +104,10 @@ public abstract class Firearms : Weapon
     protected virtual void InitBulletPool()
     {
         PoolManager.CreatePool(FirearmsData.NameGun + "_bullets", FirearmsData.ClipSize, BulletPrefab,true);
+    }
+    protected virtual void InitCasingPool()
+    {
+        PoolManager.CreatePool("Casing", 30, CasingPrefab, true);
     }
 
 }

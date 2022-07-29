@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4825a3bebdc3f32468bc8eaa1217bee9, type: 3}
+  m_Name: AssaultRifleCasingData
+  m_EditorClassIdentifier: 
+  _minForceX: 20
+  _maxForceX: 50
+  _minForceY: 20
+  _maxForceY: 50
+  _minForceZ: 20
+  _maxForceZ: 50
+  _minRotationForce: 80
+  _maxRotationForce: 100
+  _spinSpeed: 500
+  _destroyAfter: 2
